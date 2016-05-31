@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "95DCD7ED3B24B68730C167FE5C158FC0B1E9A975",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "95DCD7ED3B24B68730C167FE5C158FC0B1E9A975" : 0,
+    "BC9D9463F1C9BB8C244A02249D44DD40D625DCD0" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7789FCC4-45CA-42C9-AF9E-07C21A62AA57",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "95DCD7ED3B24B68730C167FE5C158FC0B1E9A975" : "SuperNote\/",
+    "BC9D9463F1C9BB8C244A02249D44DD40D625DCD0" : "CoreNote\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "SuperNote",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "SuperNote.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:AlBazzaz91\/SuperNote.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "95DCD7ED3B24B68730C167FE5C158FC0B1E9A975"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:AlBazzaz91\/CoreNote.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "BC9D9463F1C9BB8C244A02249D44DD40D625DCD0"
+    }
+  ]
+}

@@ -40,6 +40,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    
+    lazy var applicationDocumentsDirectory: NSURL = {
+        var urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        return urls[urls.count - 1]
+        
+        
+        
+    }()
+    
+    lazy var managedObjectModel: NSManagedObjectModel = {
+        let modelURL = NSBundle.mainBundle().URLForResource("DataModel", withExtension: "momd")!
+        
+        return NSManagedObjectModel(contentsOfURL: modelURL)!
+        
+        
+        
+    }()
+    
+    
+    
+    lazy var persistantStoreCoordinator: NSPersistentStoreCoordinator = {
+        
+        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
+        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("FirstDatabase.sqlite")
+        
+        do{
+            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+        }catch{
+            print(error)
+        }
+        
+        return coordinator
+        
+        
+    }()
+    
+    lazy var managedObjectContext: NSManagedObjectContext = {
+        
+        let coordinator = self.persistantStoreCoordinator
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = coordinator
+        
+        return managedObjectContext
+        
+    }()
+    
 
 
 }

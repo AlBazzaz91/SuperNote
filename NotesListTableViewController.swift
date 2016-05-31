@@ -7,20 +7,40 @@
 //
 
 import UIKit
+import CoreData
 
 class NotesListTableViewController: UITableViewController {
     
-    var notes: [Note]=[]
+    var notes: [Notebook]=[]
+    var moc: NSManagedObjectContext!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        let fetchRequest = NSFetchRequest()
+        let entityDescription = NSEntityDescription.entityForName("Notebook", inManagedObjectContext: moc)
+        
+        fetchRequest.entity = entityDescription
+        
+        
+        //var items = [Notebook]()
+        do{
+            try notes = moc.executeFetchRequest(fetchRequest) as! [Notebook]
+        }catch{
+            print(error)
+        }
+
+        
+        
+        
         tableView.reloadData()
+        
+        
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
         
-        var note1 = Note()
+        /*var note1 = Note()
         note1.title = "Note 1"
         note1.content = "Note 1 content"
         
@@ -33,11 +53,16 @@ class NotesListTableViewController: UITableViewController {
         note3.content = "Note 3 content"
         
         notes.appendContentsOf([note1, note2, note3])
-    }
+ */
+ }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        moc = CoreDataHelper.managedObjectContext()
+        
+        
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -74,6 +99,12 @@ class NotesListTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        moc.deleteObject(notes[indexPath.row])
+        do{
+            try moc.save()
+        }catch{
+            print(error)
+        }
         notes.removeAtIndex(indexPath.row)
         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
     }
@@ -85,14 +116,37 @@ class NotesListTableViewController: UITableViewController {
         {
             var noteDetailViewController = segue.destinationViewController as! NoteDetailViewController
             var selectedIndexPath = tableView.indexPathForSelectedRow!
-            noteDetailViewController.note = notes[selectedIndexPath.row]}
+            
+            let fetchRequest = NSFetchRequest()
+            let entityDescription = NSEntityDescription.entityForName("Notebook", inManagedObjectContext: moc)
+            
+            fetchRequest.entity = entityDescription
+            
+            
+            var items = [Notebook]()
+            do{
+                try items = moc.executeFetchRequest(fetchRequest) as! [Notebook]
+            }catch{
+                print(error)
+            }
+            
+            
+            
+            noteDetailViewController.note = items[selectedIndexPath.row]
+            noteDetailViewController.iD = "showNote"
+        }
         if segue.identifier! == "addNote"
         {
-            var note = Note()
-            notes.append(note)
+            //var Note1 = Notebook()
+            //notes.append(note)
             var noteDetailViewController = segue.destinationViewController as! NoteDetailViewController
-            noteDetailViewController.note = note
+             var Note1 = NSEntityDescription.insertNewObjectForEntityForName("Notebook", inManagedObjectContext: moc) as! Notebook
             
+            
+            
+            
+            noteDetailViewController.note = Note1
+            noteDetailViewController.iD = "addNote"
         }
         
     }

@@ -7,18 +7,55 @@
 //
 
 import UIKit
-
+import CoreData
 class NoteDetailViewController: UIViewController {
     @IBOutlet weak var contentTextField: UITextView!
     @IBOutlet weak var titleTextField: UITextField!
     
-    var note: Note!
+    var note: Notebook!
+    var moc: NSManagedObjectContext!
+    var iD: String!
     
+    
+    func MOsave()
+    {
+        do{
+            try moc.save()
+        }catch
+        {
+        print(error)
+        }
+    }
+    
+    
+    //fir_khalidi@hotmail.com
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+       
+        //if iD == "addNote"{
+        
+        if contentTextField.text != nil && titleTextField.text != nil
+        {
         note.title = titleTextField.text!
         note.content = contentTextField.text
-    }
+        
+            MOsave()
+        }
+        
+        if contentTextField.text!.isEmpty && titleTextField.text!.isEmpty
+        {
+        moc.deleteObject(note)
+        MOsave()
+        
+        }
+        //}
+        /*else if iD == "showNote"
+        {
+        note.setValue(titleTextField, forKey: title!)
+        note.setValue(contentTextField, forKey: content)
+        MOsave()
+        }*/
+        }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -28,6 +65,7 @@ class NoteDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        moc = CoreDataHelper.managedObjectContext()
         let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(NoteDetailViewController.saveButtonPressed(_:)))
         self.navigationItem.rightBarButtonItem = saveButton
         // Do any additional setup after loading the view.
